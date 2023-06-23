@@ -1,0 +1,240 @@
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* HEADER */
+
+.directorio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 5rem;
+  height: 200px;
+}
+
+.directorio-header-left,
+.directorio-header-right {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  height: 100%;
+}
+
+/* LEFT SIDE */
+
+.directorio-logo {
+  height: 70%;
+  cursor: pointer;
+}
+
+.title-description-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--gold-crayola);
+}
+
+.directorio-title {
+  display: flex;
+  position: relative;
+  margin: 0;
+  font-size: 5rem;
+  cursor: default;
+}
+
+.directorio-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--gold-crayola);
+  transition: all 0.3s ease;
+}
+
+.directorio-title:hover::after {
+  width: 100%;
+}
+
+.description {
+  font-size: 2rem;
+  vertical-align: bottom;
+}
+
+/* RIGHT SIDE */
+
+.search-label {
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  fill: var(--gold-crayola);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--eerie-black-4);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  box-shadow: 0px 2px var(--davys-grey);
+}
+
+.search-input {
+  color: white;
+}
+
+/* CARDS */
+
+.restaurants-container {
+  width: 100%;
+  height: 100%;
+  padding: 2rem 3rem;
+  gap: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--gold-crayola);
+  font-size: 2.4rem;
+  border: 1px solid var(--gold-crayola);
+  width: 45px;
+  height: 45px;
+  place-items: center;
+  transform: rotate(45deg);
+  transition: var(--transition-1);
+}
+
+.slider-btn:is(:hover, :focus-visible) {
+  background-color: var(--gold-crayola);
+  color: var(--black);
+}
+
+.slider-btn ion-icon {
+  transform: rotate(-45deg);
+}
+
+.restaurants-subcontainer {
+  width: 80%;
+  height: calc(100vh - 200px);
+  text-align: center;
+  padding-top: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.restaurants {
+  position: relative;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-rows: repeat(auto-fill, 200px);
+  column-gap: 5rem;
+  row-gap: 5rem;
+  padding-bottom: 4rem;
+}
+
+.restaurants-not-found::after {
+  content: "Sin resultados encontrados...";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 6rem;
+  font-weight: bolder;
+  color: var(--gold-crayola);
+}
+
+.card-anchor {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.card-restaurant {
+  position: relative;
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 2px 3px 10px black;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.card-restaurant:hover::after {
+  content: "";
+}
+
+.card-restaurant:hover {
+  transform: scale(1.05);
+}
+
+.card-restaurant-active .card-image {
+  opacity: 0.5;
+}
+
+.card-restaurant-active .card-info {
+  top: 0;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s ease;
+}
+
+.card-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s ease;
+}
+
+.card-info-content {
+  padding: 0.5rem 1rem;
+  border-radius: 15px 15px 0 0;
+  color: var(--gold-crayola);
+  background-color: var(--black-alpha-80);
+}
+
+.card-name {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.card-description {
+  line-height: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.restaurant-loader {
+  display: none;
+  width: 15rem;
+  fill: var(--gold-crayola);
+}
+
+.restaurant-loader-active {
+  display: inline-block;
+}

@@ -1,170 +1,170 @@
-'use strict';
-
-
+"use strict";
 
 /**
  * PRELOAD
- * 
+ *
  * loading will be end after document is loaded
  */
 
-const preloader = document.querySelector("[data-preaload]");
+(() => {
+  const preloader = document.querySelector("[data-preaload]");
 
-window.addEventListener("load", function () {
-  preloader.classList.add("loaded");
-  document.body.classList.add("loaded");
-});
+  if (!preloader) return;
 
+  window.addEventListener("load", function () {
+    preloader.classList.add("loaded");
+    document.body.classList.add("loaded");
+  });
 
+  /**
+   * add event listener on multiple elements
+   */
 
-/**
- * add event listener on multiple elements
- */
+  const addEventOnElements = function (elements, eventType, callback) {
+    for (let i = 0, len = elements.length; i < len; i++) {
+      elements[i].addEventListener(eventType, callback);
+    }
+  };
 
-const addEventOnElements = function (elements, eventType, callback) {
-  for (let i = 0, len = elements.length; i < len; i++) {
-    elements[i].addEventListener(eventType, callback);
-  }
-}
+  /**
+   * NAVBAR
+   */
 
+  const navbar = document.querySelector("[data-navbar]");
+  const navTogglers = document.querySelectorAll("[data-nav-toggler]");
+  const overlay = document.querySelector("[data-overlay]");
 
+  if (!navbar || !navTogglers || !overlay) return;
 
-/**
- * NAVBAR
- */
+  const toggleNavbar = function () {
+    navbar.classList.toggle("active");
+    overlay.classList.toggle("active");
+    document.body.classList.toggle("nav-active");
+  };
 
-const navbar = document.querySelector("[data-navbar]");
-const navTogglers = document.querySelectorAll("[data-nav-toggler]");
-const overlay = document.querySelector("[data-overlay]");
+  addEventOnElements(navTogglers, "click", toggleNavbar);
 
-const toggleNavbar = function () {
-  navbar.classList.toggle("active");
-  overlay.classList.toggle("active");
-  document.body.classList.toggle("nav-active");
-}
+  /**
+   * HEADER & BACK TOP BTN
+   */
 
-addEventOnElements(navTogglers, "click", toggleNavbar);
+  const header = document.querySelector("[data-header]");
+  const backTopBtn = document.querySelector("[data-back-top-btn]");
 
+  let lastScrollPos = 0;
 
+  const hideHeader = function () {
+    const isScrollBottom = lastScrollPos < window.scrollY;
+    if (isScrollBottom) {
+      header.classList.add("hide");
+    } else {
+      header.classList.remove("hide");
+    }
 
-/**
- * HEADER & BACK TOP BTN
- */
+    lastScrollPos = window.scrollY;
+  };
 
-const header = document.querySelector("[data-header]");
-const backTopBtn = document.querySelector("[data-back-top-btn]");
+  window.addEventListener("scroll", function () {
+    if (window.scrollY >= 50) {
+      header.classList.add("active");
+      backTopBtn.classList.add("active");
+      hideHeader();
+    } else {
+      header.classList.remove("active");
+      backTopBtn.classList.remove("active");
+    }
+  });
+  /**
+   * HERO SLIDER
+   */
 
-let lastScrollPos = 0;
+  const heroSliderItems = document.querySelectorAll("[data-hero-slider-item]");
+  const heroSliderPrevBtn = document.querySelector("[data-prev-btn]");
+  const heroSliderNextBtn = document.querySelector("[data-next-btn]");
 
-const hideHeader = function () {
-  const isScrollBottom = lastScrollPos < window.scrollY;
-  if (isScrollBottom) {
-    header.classList.add("hide");
-  } else {
-    header.classList.remove("hide");
-  }
+  if (!heroSliderItems || !heroSliderPrevBtn || !heroSliderNextBtn) return;
 
-  lastScrollPos = window.scrollY;
-}
+  let currentSlidePos = 0;
+  let lastActiveSliderItem = heroSliderItems[0];
 
-window.addEventListener("scroll", function () {
-  if (window.scrollY >= 50) {
-    header.classList.add("active");
-    backTopBtn.classList.add("active");
-    hideHeader();
-  } else {
-    header.classList.remove("active");
-    backTopBtn.classList.remove("active");
-  }
-});
+  const updateSliderPos = function () {
+    lastActiveSliderItem.classList.remove("active");
+    heroSliderItems[currentSlidePos].classList.add("active");
+    lastActiveSliderItem = heroSliderItems[currentSlidePos];
+  };
 
+  const slideNext = function () {
+    if (currentSlidePos >= heroSliderItems.length - 1) {
+      currentSlidePos = 0;
+    } else {
+      currentSlidePos++;
+    }
 
+    updateSliderPos();
+  };
 
-/**
- * HERO SLIDER
- */
+  heroSliderNextBtn.addEventListener("click", slideNext);
 
-const heroSlider = document.querySelector("[data-hero-slider]");
-const heroSliderItems = document.querySelectorAll("[data-hero-slider-item]");
-const heroSliderPrevBtn = document.querySelector("[data-prev-btn]");
-const heroSliderNextBtn = document.querySelector("[data-next-btn]");
+  const slidePrev = function () {
+    if (currentSlidePos <= 0) {
+      currentSlidePos = heroSliderItems.length - 1;
+    } else {
+      currentSlidePos--;
+    }
 
-let currentSlidePos = 0;
-let lastActiveSliderItem = heroSliderItems[0];
+    updateSliderPos();
+  };
 
-const updateSliderPos = function () {
-  lastActiveSliderItem.classList.remove("active");
-  heroSliderItems[currentSlidePos].classList.add("active");
-  lastActiveSliderItem = heroSliderItems[currentSlidePos];
-}
+  heroSliderPrevBtn.addEventListener("click", slidePrev);
 
-const slideNext = function () {
-  if (currentSlidePos >= heroSliderItems.length - 1) {
-    currentSlidePos = 0;
-  } else {
-    currentSlidePos++;
-  }
+  /**
+   * auto slide
+   */
 
-  updateSliderPos();
-}
+  let autoSlideInterval;
 
-heroSliderNextBtn.addEventListener("click", slideNext);
+  const autoSlide = function () {
+    autoSlideInterval = setInterval(function () {
+      slideNext();
+    }, 7000);
+  };
 
-const slidePrev = function () {
-  if (currentSlidePos <= 0) {
-    currentSlidePos = heroSliderItems.length - 1;
-  } else {
-    currentSlidePos--;
-  }
+  addEventOnElements(
+    [heroSliderNextBtn, heroSliderPrevBtn],
+    "mouseover",
+    function () {
+      clearInterval(autoSlideInterval);
+    }
+  );
 
-  updateSliderPos();
-}
+  addEventOnElements(
+    [heroSliderNextBtn, heroSliderPrevBtn],
+    "mouseout",
+    autoSlide
+  );
 
-heroSliderPrevBtn.addEventListener("click", slidePrev);
+  window.addEventListener("load", autoSlide);
 
-/**
- * auto slide
- */
+  /**
+   * PARALLAX EFFECT
+   */
 
-let autoSlideInterval;
+  const parallaxItems = document.querySelectorAll("[data-parallax-item]");
 
-const autoSlide = function () {
-  autoSlideInterval = setInterval(function () {
-    slideNext();
-  }, 7000);
-}
+  let x, y;
 
-addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseover", function () {
-  clearInterval(autoSlideInterval);
-});
+  window.addEventListener("mousemove", function (event) {
+    x = (event.clientX / window.innerWidth) * 10 - 5;
+    y = (event.clientY / window.innerHeight) * 10 - 5;
 
-addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseout", autoSlide);
+    // reverse the number eg. 20 -> -20, -5 -> 5
+    x = x - x * 2;
+    y = y - y * 2;
 
-window.addEventListener("load", autoSlide);
-
-
-
-/**
- * PARALLAX EFFECT
- */
-
-const parallaxItems = document.querySelectorAll("[data-parallax-item]");
-
-let x, y;
-
-window.addEventListener("mousemove", function (event) {
-
-  x = (event.clientX / window.innerWidth * 10) - 5;
-  y = (event.clientY / window.innerHeight * 10) - 5;
-
-  // reverse the number eg. 20 -> -20, -5 -> 5
-  x = x - (x * 2);
-  y = y - (y * 2);
-
-  for (let i = 0, len = parallaxItems.length; i < len; i++) {
-    x = x * Number(parallaxItems[i].dataset.parallaxSpeed);
-    y = y * Number(parallaxItems[i].dataset.parallaxSpeed);
-    parallaxItems[i].style.transform = `translate3d(${x}px, ${y}px, 0px)`;
-  }
-
-});
+    for (let i = 0, len = parallaxItems.length; i < len; i++) {
+      x = x * Number(parallaxItems[i].dataset.parallaxSpeed);
+      y = y * Number(parallaxItems[i].dataset.parallaxSpeed);
+      parallaxItems[i].style.transform = `translate3d(${x}px, ${y}px, 0px)`;
+    }
+  });
+})();
