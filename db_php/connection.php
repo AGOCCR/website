@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db = 'agoc';
 $user = 'root';
-$password = '';
+$password = 'Word12ggr$GOW!%';
 
 
 try {

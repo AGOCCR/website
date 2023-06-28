@@ -1,8 +1,13 @@
 .main {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
   overflow: hidden;
+}
+
+.content {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
 }
 
 /* HEADER */
@@ -67,6 +72,114 @@
 
 /* RIGHT SIDE */
 
+/* SELECT */
+
+.preferences-container {
+  position: relative;
+  height: 40px;
+}
+
+.preferences-button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  border-radius: 8px;
+  color: var(--gold-crayola);
+  background-color: var(--eerie-black-4);
+  box-shadow: 0 2px var(--davys-grey);
+}
+
+.preferences-button:active,
+.preferences-button-cancel:active,
+.preferences-button-send:active {
+  transform: translateY(2px);
+}
+
+.preferences-form {
+  position: absolute;
+  padding: 1rem;
+  top: 110%;
+  left: 0;
+  width: 250px;
+  height: 300px;
+  border-radius: 5px;
+  background-color: var(--eerie-black-4);
+  color: var(--gold-crayola);
+  box-shadow: 2px 2px 3px var(--black-alpha-80);
+  overflow: auto;
+  z-index: 1;
+  transform-origin: top left;
+  transform: translateY(15px);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.preferences-form-active {
+  transform: translateY(0px);
+  visibility: visible;
+  opacity: 1;
+}
+
+.preferences-option {
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.preferences-option:hover {
+  background-color: var(--davys-grey);
+}
+
+.preferences-option > label {
+  width: 100%;
+  font-size: 1.6rem;
+  text-align: left;
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.preferences-option > input {
+  width: 25px;
+}
+
+.preferences-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.preferences-title {
+  font-size: 1.9rem;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: white;
+  border-bottom: 1px solid white;
+}
+
+.preferences-button-send,
+.preferences-button-cancel {
+  font-size: 1.3rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 5px;
+}
+
+.preferences-button-cancel {
+  background-color: var(--davys-grey);
+  color: white;
+}
+
+.preferences-button-send {
+  background-color: var(--gold-crayola);
+  color: var(--eerie-black-4);
+}
+
 .search-label {
   display: flex;
   align-items: center;
@@ -76,8 +189,13 @@
   fill: var(--gold-crayola);
 }
 
-.search {
+.title-option {
+  font-size: 2rem;
+}
+
+.container-option {
   display: flex;
+  height: 40px;
   align-items: center;
   gap: 1rem;
   background-color: var(--eerie-black-4);
@@ -92,14 +210,12 @@
 
 /* CARDS */
 
-.restaurants-container {
-  width: 100%;
-  height: 100%;
-  padding: 2rem 3rem;
-  gap: 7rem;
+.directorio-buttons {
+  width: 80%;
+  margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0;
 }
 
 .slider-btn {
@@ -109,8 +225,10 @@
   color: var(--gold-crayola);
   font-size: 2.4rem;
   border: 1px solid var(--gold-crayola);
-  width: 45px;
-  height: 45px;
+  min-width: 45px;
+  min-height: 45px;
+  max-width: 45px;
+  max-height: 45px;
   place-items: center;
   transform: rotate(45deg);
   transition: var(--transition-1);
@@ -125,25 +243,16 @@
   transform: rotate(-45deg);
 }
 
-.restaurants-subcontainer {
-  width: 80%;
-  height: calc(100vh - 200px);
-  text-align: center;
-  padding-top: 1rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
 .restaurants {
   position: relative;
-  width: 100%;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, 200px);
-  grid-template-rows: repeat(auto-fill, 200px);
+  align-items: center;
+  grid-template-columns: repeat(auto-fill, 270px);
   column-gap: 5rem;
   row-gap: 5rem;
-  padding-bottom: 4rem;
+  padding: 4rem;
+  margin-bottom: 7rem;
 }
 
 .restaurants-not-found::after {
@@ -167,29 +276,41 @@
   cursor: pointer;
 }
 
+.card-anchor::after {
+  opacity: 0;
+  position: absolute;
+  content: "+";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--gold-crayola);
+  background-color: var(--black-alpha-80);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.card-anchor:hover::after {
+  opacity: 1;
+}
+
 .card-restaurant {
   position: relative;
+  height: 200px;
   background-color: black;
-  border-radius: 10px;
+  border-radius: 15px;
+  border: 2px solid var(--davys-grey);
   box-shadow: 2px 3px 10px black;
   overflow: hidden;
   transition: all 0.5s ease;
 }
 
-.card-restaurant:hover::after {
-  content: "";
-}
-
-.card-restaurant:hover {
-  transform: scale(1.05);
-}
-
 .card-restaurant-active .card-image {
   opacity: 0.5;
-}
-
-.card-restaurant-active .card-info {
-  top: 0;
 }
 
 .card-image {
@@ -205,7 +326,7 @@
   flex-direction: column;
   justify-content: end;
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -220,13 +341,16 @@
 }
 
 .card-name {
+  line-height: 2rem;
   font-size: 2rem;
+  padding: 1rem 0;
   margin: 0;
 }
 
 .card-description {
-  line-height: 1.5rem;
-  font-size: 1.5rem;
+  line-height: 1.6rem;
+  font-size: 1.6rem;
+  padding: 0.5rem 0;
 }
 
 .restaurant-loader {

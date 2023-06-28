@@ -7,7 +7,7 @@
         <div class="footer-brand has-before has-after">
 
           <a href="#" class="logo">
-            <img src="./assets/images/logo_blanco.png" width="160" height="50" loading="lazy" alt="AGOC">
+            <img src="../assets/images/logo_blanco.png" ?> width="160" height="50" loading="lazy" alt="AGOC">
           </a>
 
           <address class="body-4">

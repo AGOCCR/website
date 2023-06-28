@@ -1,0 +1,54 @@
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.login-form {
+  width: 80%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: var(--gold-crayola);
+  border-radius: 6px;
+  box-shadow: 3px 3px 4px black;
+}
+
+.header-form {
+  display: flex;
+  justify-content: center;
+  height: 150px;
+  padding: 1rem;
+  background-color: var(--smoky-black-2);
+  border-radius: 15px 15px 0 0;
+}
+
+.logo-form {
+  height: 100%;
+}
+
+.form-content {
+  height: 100%;
+  padding: 2rem;
+  background-color: var(--black-alpha-80);
+  border-radius: 0 0 15px 15px;
+}
+
+.form-label {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.register-link-container {
+  display: flex;
+}
+
+.register-link {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--gold-crayola);
+}
